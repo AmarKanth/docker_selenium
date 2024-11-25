@@ -1,0 +1,11 @@
+version: '3.3'
+
+services:
+  web:
+    build:
+      context: ./sos_ky_app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./sos_ky_app:/app
+    command: python manage.py runserver 0.0.0.0:8000
