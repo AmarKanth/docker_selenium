@@ -31,8 +31,4 @@ RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.d
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-RUN python manage.py migrate
-
-EXPOSE 8000
-
-CMD ["sh", "-c", "python manage.py runserver 0.0.0.0:8000"]
+RUN chmod +x entrypoint.sh

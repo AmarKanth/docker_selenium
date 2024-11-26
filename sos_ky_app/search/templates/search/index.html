@@ -29,7 +29,7 @@
             $(document).ready(function() {
                 function fetchData() {
                     $.ajax({
-                        url: '/',
+                        url: '/?query=' + encodeURIComponent($('#search-query').val()),
                         method: 'GET',
                         success: function (data) {
                             $('#search-table-body').html(data.html);

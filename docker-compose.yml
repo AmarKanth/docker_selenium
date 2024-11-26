@@ -8,10 +8,27 @@ services:
             - "8000:8000"
         volumes:
             - ./sos_ky_app:/app
-        command: >
-            sh -c "python manage.py runserver 0.0.0.0:8000"
+        entrypoint: ["sh", "-c", "chmod +x /app/entrypoint.sh && /app/entrypoint.sh"]
+        environment:
+            - DB_HOST=db
+            - DB_NAME=devdb
+            - DB_USER=devuser
+            - DB_PASSWORD=changeme
+            - DEBUG=1
         depends_on:
+            - db
             - celery
+
+    db:
+        image: postgres:16-alpine
+        volumes: 
+            - dev-db-data:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        environment:
+            - POSTGRES_DB=devdb
+            - POSTGRES_USER=devuser
+            - POSTGRES_PASSWORD=changeme
 
     celery:
         build:
@@ -19,6 +36,12 @@ services:
         command: celery -A core worker --loglevel=info
         volumes:
             - ./sos_ky_app:/app
+        environment:
+            - DB_HOST=db
+            - DB_NAME=devdb
+            - DB_USER=devuser
+            - DB_PASSWORD=changeme
+            - DEBUG=1
         depends_on:
             - redis
 
@@ -26,3 +49,6 @@ services:
         image: redis:6.2
         ports:
             - "6379:6379"
+
+volumes:
+    dev-db-data:

@@ -28,7 +28,7 @@ class WebScraper:
         submit_button.click()
 
         active_row_link = self.driver.find_element(
-            By.XPATH, '//table[@id="ctl00_ContentPlaceHolder1_searchlist2_Table1"]//tr[@class="Activebg"][1]/td/a'
+            By.XPATH, '//*[contains(@id, "ctl00_ContentPlaceHolder1")]//table//tr[@class="Activebg"][1]/td/a'
         )
         active_row_link.click()
 
