@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Search SSO in KY</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    <body>
+        <h1>Search SSO</h1>
+        
+        <input type="text" id="search-query" placeholder="Enter your search query">
+        <button id="search-button">Search</button>
+        
+        <table id="search-table">
+            <thead>
+                <tr>
+                    <th>Search Query</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody id="search-table-body">
+                {% include 'search/_records_table.html' %}
+            </tbody>
+        </table>
+
+        <script>
+            $(document).ready(function() {
+                function fetchData() {
+                    $.ajax({
+                        url: '/',
+                        method: 'GET',
+                        success: function (data) {
+                            $('#search-table-body').html(data.html);
+                        },
+                        error: function () {
+                            alert('An error occurred');
+                        }
+                    });
+                }
+
+                $('#search-button').on('click', function () {
+                    fetchData();
+                });
+
+                // setInterval(fetchData, 30000);
+            });
+        </script>
+    </body>
+</html>

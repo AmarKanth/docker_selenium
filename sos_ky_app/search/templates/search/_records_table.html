@@ -1,0 +1,7 @@
+{% for i, record in records %}
+<tr id="record-{{ i }}">
+    <td>{{ record.search_query }}</td>
+    <td>{{ record.status }}</td>
+    <td>{{ record.created_at }}</td>
+</tr>
+{% endfor %}
