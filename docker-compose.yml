@@ -1,11 +1,28 @@
 version: '3.3'
 
 services:
-  web:
-    build:
-      context: ./sos_ky_app
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./sos_ky_app:/app
-    command: python manage.py runserver 0.0.0.0:8000
+    web:
+        build:
+            context: ./sos_ky_app
+        ports:
+            - "8000:8000"
+        volumes:
+            - ./sos_ky_app:/app
+        command: >
+            sh -c "python manage.py runserver 0.0.0.0:8000"
+        depends_on:
+            - celery
+
+    celery:
+        build:
+            context: ./sos_ky_app
+        command: celery -A core worker --loglevel=info
+        volumes:
+            - ./sos_ky_app:/app
+        depends_on:
+            - redis
+
+    redis:
+        image: redis:6.2
+        ports:
+            - "6379:6379"
