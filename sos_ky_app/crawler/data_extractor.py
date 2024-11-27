@@ -17,9 +17,9 @@ class DataExtractor:
         rows = self.soup.select('table#ctl00_ContentPlaceHolder1_showentity1_actionstable tr.Activebg')
         actions = [
             {
-                "Action": row.find_all("td")[0].text.strip(),
-                "File Date": row.find_all("td")[1].text.strip(),
-                "Status": row.find_all("td")[2].text.strip()
+                "action": row.find_all("td")[0].text.strip(),
+                "file_date": row.find_all("td")[1].text.strip(),
+                "status": row.find_all("td")[2].text.strip()
             }
             for row in rows
         ]
@@ -29,9 +29,9 @@ class DataExtractor:
         rows = self.soup.select('table#ctl00_ContentPlaceHolder1_showentity1_namestable tr.Activebg.CollBorder')
         names = [
             {
-                "Name Role": row.find_all("td")[0].text.strip().replace('\n', ' - '),
-                "Date Added": row.find_all("td")[1].text.strip(),
-                "Address": row.find_all("td")[2].text.strip().replace('<br>', ', ')
+                "name_role": row.find_all("td")[0].text.strip().replace('\n', ' - '),
+                "date_added": row.find_all("td")[1].text.strip(),
+                "address": row.find_all("td")[2].text.strip().replace('<br>', ', ')
             }
             for row in rows
         ]

@@ -3,16 +3,75 @@
 {% block title %}Search Results{% endblock %}
 
 {% block content %}
-{% for result in results %}
-	<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-	    <div>Organization Name: {{ result.organization_name }}</div>
-	    <div>Created At: {{ result.created_at }}</div>
-	</div>
-	<div>Result Data : {{result.result_data}}</div>
-	<div></div>
-{% empty %}
-	<div>No results available.</div>
-{% endfor %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Search Result Details</h1>
 
-<div><a href="/" style="text-decoration: none; color: blue; font-weight: bold;">&larr; Back to Home</a></div>
+    {% for result in results %}
+    <div class="card mb-4">
+        <div class="card-body">
+            <!-- Organization Info Section -->
+            <div class="d-flex justify-content-between mb-3">
+                <h5 class="card-title">Organization Name: {{ result.organization_name }}</h5>
+                <p class="card-text">Created At: {{ result.created_at }}</p>
+            </div>
+
+            <!-- Basic Info Section -->
+            <div class="card-text mb-3">
+                <h6><strong>Basic Information</strong></h6>
+                <p><strong>Status:</strong> {{ result.result_data.basic_info.status }}</p>
+                <p><strong>Lapse Date:</strong> {{ result.result_data.basic_info.lapse_date }}</p>
+                <p><strong>File Number:</strong> {{ result.result_data.basic_info.file_number }}</p>
+                <p><strong>Filing Date:</strong> {{ result.result_data.basic_info.filing_date }}</p>
+            </div>
+
+            <!-- Names and Addresses Section -->
+            <div class="card-text mb-3">
+                <h6><strong>Names and Addresses</strong></h6>
+                {% for name in result.result_data.names %}
+                <p><strong>Name/Role:</strong> {{ name.name_role }}</p>
+                <p><strong>Address:</strong> {{ name.address }}</p>
+                <p><strong>Date Added:</strong> {{ name.date_added }}</p>
+                <hr>
+                {% endfor %}
+            </div>
+
+            <!-- Images Section -->
+            <div class="card-text mb-3">
+                <h6><strong>Images</strong></h6>
+                {% for image in result.result_data.images %}
+                <p><strong>Document Type:</strong> {{ image.doc_type }}</p>
+                <p><strong>File Date:</strong> {{ image.file_date }}</p>
+                <p><a href="{{ image.link }}" class="btn btn-outline-primary" target="_blank">View Document</a></p>
+                <hr>
+                {% endfor %}
+            </div>
+
+            <!-- Actions Section -->
+            <div class="card-text mb-3">
+                <h6><strong>Actions</strong></h6>
+                {% for action in result.result_data.actions %}
+                <p><strong>Action:</strong> {{ action.action }}</p>
+                <p><strong>Status:</strong> {{ action.status }}</p>
+                <p><strong>File Date:</strong> {{ action.file_date }}</p>
+                <hr>
+                {% endfor %}
+            </div>
+
+            <!-- Collateral Description Section -->
+            <div class="card-text mb-3">
+                <h6><strong>Collateral Description</strong></h6>
+                <p><strong>Description:</strong> {{ result.result_data.collateral_description.description }}</p>
+                <p><strong>Date Filed:</strong> {{ result.result_data.collateral_description.date_filed }}</p>
+            </div>
+        </div>
+    </div>
+
+    {% empty %}
+    <div class="alert alert-warning">No results available.</div>
+    {% endfor %}
+
+    <div class="text-center mt-4">
+        <a href="/" class="btn btn-outline-primary">&larr; Back to Home</a>
+    </div>
+</div>
 {% endblock %}

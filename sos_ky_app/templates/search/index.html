@@ -1,23 +1,33 @@
 {% extends 'base.html' %}
 
-{% block title %}Search{% endblock %}
-
 {% block content %}
-<h1>Search SSO</h1>
+<div class="container mt-5">
+    <h1 class="text-center">Search SSO</h1>
 
-<input type="text" id="search-query" placeholder="Enter your search query">
-<button id="search-button">Search</button>
+    <!-- Search input and button row -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" id="search-query" class="form-control" placeholder="Enter your search query" aria-label="Search Query">
+                <button id="search-button" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </div>
 
-<table id="search-table">
-    <thead>
-        <tr>
-            <th>Search Query</th>
-            <th>Status</th>
-            <th>Created At</th>
-        </tr>
-    </thead>
-    <tbody id="search-table-body">
-        {% include 'search/_records_table.html' %}
-    </tbody>
-</table>
+    <!-- Search results table -->
+    <div class="table-responsive">
+        <table id="search-table" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Search Query</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody id="search-table-body">
+                {% include 'search/_records_table.html' %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}
