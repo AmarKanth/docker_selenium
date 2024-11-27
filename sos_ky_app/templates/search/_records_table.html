@@ -1,6 +1,6 @@
 {% for record in records %}
 <tr id="record-{{ record.id }}">
-    <td>{{ record.search_term }}</td>
+    <td><a href="{% url 'details' record.id %}">{{ record.search_term }}</a></td>
     <td>{{ record.status }}</td>
     <td>{{ record.created_at }}</td>
 </tr>

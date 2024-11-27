@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+{% for result in results %}
+	<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+	    <div>Organization Name: {{ result.organization_name }}</div>
+	    <div>Created At: {{ result.created_at }}</div>
+	</div>
+	<div>Result Data : {{result.result_data}}</div>
+	<div></div>
+{% empty %}
+	<div>No results available.</div>
+{% endfor %}
+
+<div><a href="/" style="text-decoration: none; color: blue; font-weight: bold;">&larr; Back to Home</a></div>
+{% endblock %}

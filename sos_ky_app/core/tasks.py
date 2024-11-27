@@ -19,7 +19,8 @@ def run_webscraper(search_query_id):
         query.status = 'completed'
         query.save()
     except Exception as e:
-        print(f"An error occurred while writing to the file: {e}")
+        query.status = 'failed'
+        query.save()
     finally:
         scraper.quit()
 

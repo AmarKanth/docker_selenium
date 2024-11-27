@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}My Django App{% endblock %}</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    <body>
+
+        <main>
+            {% block content %}
+            <!-- Main content will go here -->
+            {% endblock %}
+        </main>
+
+        <footer>
+            <p>© 2024 SSO Kentucky App</p>
+        </footer>
+
+        <script>
+            $(document).ready(function() {
+                function fetchData(query = '') {
+                    $.ajax({
+                        url: '/?query=' + encodeURIComponent(query),
+                        method: 'GET',
+                        success: function(data) {
+                            $('#search-table-body').html(data.html);
+                        },
+                        error: function() {
+                            alert('An error occurred');
+                        }
+                    });
+                }
+
+                $('#search-button').on('click', function() {
+                    const query = $('#search-query').val();
+                    fetchData(query);
+                });
+
+                setInterval(function() {
+                    fetchData('');
+                }, 30000);
+            });
+        </script>
+
+    </body>
+</html>

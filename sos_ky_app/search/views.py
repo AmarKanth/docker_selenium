@@ -1,12 +1,9 @@
-import os
-import json
-
 from django.views import View
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
-from search.models import SearchQuery
+from search.models import SearchQuery, SearchResult
 from core.tasks import run_webscraper
 
 
@@ -24,3 +21,9 @@ class SearchView(View):
             html = render_to_string('search/_records_table.html', {'records': records})
             return JsonResponse({'html': html})
         return render(request, 'search/index.html', {'records': records})
+
+
+class SearchDetails(View):
+    def get(self, request, id):
+        results = SearchResult.objects.filter(search_query_id=id)
+        return render(request, 'search/details.html', {'results': results})
